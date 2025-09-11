@@ -1,17 +1,25 @@
+version: "3.8"
 services:
   app:
     build: .
     ports:
       - "8080:8080"
     depends_on:
-      - db
-  db:
-    image: postgres:17-alpine
+      - redis
+      - postgres
     environment:
-      POSTGRES_USER: demo
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: demo
-    volumes:
-      - /Users/david/tech4dev/v2/bootcamp/docker/data:/var/lib/postgresql/data
-# volumes:
-#   db_data:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
