@@ -1,2 +1,6 @@
 fastapi
 uvicorn
+asyncpg
+databases
+redis
+psycopg2-binary
